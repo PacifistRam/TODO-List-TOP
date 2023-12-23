@@ -1,4 +1,4 @@
-//import initializeEventListeners from "./initializeEvents";
+import initializeEventListeners from "./initializeEvents";
 import {todoCategories} from "./createTodo";
 import {createCategory} from "./createTodo"
 
@@ -19,18 +19,18 @@ const CreateTodoContainer =() => {
     submitForm.appendChild(submitButton);
     displayCategory.appendChild(submitForm);
     displayCategory.appendChild(categoryList);
-    //initializeEventListeners(submitButton);
+    initializeEventListeners(submitButton);
 
-    submitButton.addEventListener('click',(e)=> {
-        e.preventDefault();
-        const input = document.querySelector('.category-input');
-        const category = input.value;
-        console.log(category);
+    // submitButton.addEventListener('click',(e)=> {
+    //     e.preventDefault();
+    //     const input = document.querySelector('.category-input');
+    //     const category = input.value;
+    //     console.log(category);
 
-        submitTodoCategory(category);
-        console.log(todoCategories);
-        renderTodoCategory();
-    })
+    //     submitTodoCategory(category);
+    //     console.log(todoCategories);
+    //     renderTodoCategory();
+    // })
     
 
     return displayCategory;
@@ -52,5 +52,28 @@ function submitTodoCategory(category) {
     createCategory(category);
 }
 
+function renderTodoContainer(categoryName) {
+    const todoItemContainer = document.querySelector('.todo-item-container')
+    todoItemContainer.textContent = '';
+    const category = todoCategories.find((cat) => cat.name === categoryName)
+    if(category) {
+
+        category.todoList.forEach(todo => {
+            const todoSingleItemContainer = document.createElement('div');
+            const todoTitle = document.createElement('h3')
+            todoTitle.textContent = todo.title; 
+            const todoDescription = document.createElement('p')
+            todoDescription.textContent = todo.description; 
+            const todoDueDate = document.createElement('p')
+            todoDueDate.textContent = todo.dueDate; 
+            todoSingleItemContainer.append(todoTitle,todoDescription,todoDueDate)
+            todoItemContainer.appendChild(todoSingleItemContainer);
+        })
+    } else {
+        console.log(`Category "${categoryName}" not found`);
+    }
+
+}
+
 export default CreateTodoContainer;
-export {renderTodoCategory};
+export {renderTodoCategory,renderTodoContainer};

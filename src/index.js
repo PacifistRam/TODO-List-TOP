@@ -1,14 +1,15 @@
 console.log("hello World");
 const container = document.querySelector('#container');
-
+const todoItemContainer = document.createElement('div');
+todoItemContainer.classList.add('todo-item-container')
 import {todoCategories,TodoItem,TodoCategory,doesCategoryExist,createCategory,addTodoCategory} from "./createTodo"
 import CreateTodoContainer from "./renderDom";
-import { renderTodoCategory } from "./renderDom";
+import { renderTodoCategory,renderTodoContainer } from "./renderDom";
 
 
 
 container.appendChild(CreateTodoContainer());
-
+container.appendChild(todoItemContainer);
 
 
 //-------testing function calls
@@ -46,7 +47,10 @@ addTodoCategory(
     "High"
   );
   console.log(todoCategories);
+  console.log(todoCategories);
 
   //////-----------------------////////////
 
   renderTodoCategory();
+  renderTodoContainer('shopping');
+  //renderTodoContainer('House chores');

@@ -16,7 +16,11 @@ const initializeEventListeners = (submitButton) => {
         submitTodoCategory(category);
         renderTodoCategory();
     })
+
+
 }
+
+
 
 export default initializeEventListeners;
 

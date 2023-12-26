@@ -1,7 +1,7 @@
 import initializeEventListeners from "./initializeEvents";
+import { intialzeCategoryClicked, addButtonTodoItem} from "./initializeEvents";
 import {todoCategories} from "./createTodo";
 import {createCategory} from "./createTodo"
-
 
 const CreateTodoContainer =() => {
     const displayCategory = document.createElement('div');
@@ -20,17 +20,6 @@ const CreateTodoContainer =() => {
     displayCategory.appendChild(submitForm);
     displayCategory.appendChild(categoryList);
     initializeEventListeners(submitButton);
-
-    // submitButton.addEventListener('click',(e)=> {
-    //     e.preventDefault();
-    //     const input = document.querySelector('.category-input');
-    //     const category = input.value;
-    //     console.log(category);
-
-    //     submitTodoCategory(category);
-    //     console.log(todoCategories);
-    //     renderTodoCategory();
-    // })
     
 
     return displayCategory;
@@ -45,7 +34,7 @@ function renderTodoCategory () {
         categoryListItem.textContent = category.name;
         categoryList.appendChild(categoryListItem);
     })
-    
+    intialzeCategoryClicked(categoryList); 
 }
 
 function submitTodoCategory(category) {
@@ -69,11 +58,61 @@ function renderTodoContainer(categoryName) {
             todoSingleItemContainer.append(todoTitle,todoDescription,todoDueDate)
             todoItemContainer.appendChild(todoSingleItemContainer);
         })
+
+        const addButton = document.createElement('button')
+        addButton.classList.add('add-todo-button');
+        addButton.textContent = "ADD";
+        todoItemContainer.appendChild(addButton);
+        addButtonTodoItem(addButton);
     } else {
         console.log(`Category "${categoryName}" not found`);
     }
 
 }
 
+function renderTodoAddItemForm(categoryName) {
+    const todoItemContainer = document.querySelector('.todo-item-container');
+    const todoAddItemFormContainer = document.querySelector('div');
+    todoAddItemFormContainer.classList.add('todo-item-form-container')
+    const todoAddItemForm = document.createElement('form');
+    todoAddItemForm.classList.add('add-todo-form');
+    const titleLabel = document.createElement('label');
+    titleLabel.textContent = 'Title:';
+    const todoTitle = document.createElement('input');
+    todoTitle.type = "text";
+    titleLabel.setAttribute('for',todoTitle);
+    
+    const descriptionLabel = document.createElement('label');
+    descriptionLabel.textContent = 'Description:';
+    const todoDescription = document.createElement('input');
+    todoDescription.type = "text";
+    descriptionLabel.setAttribute('for',todoDescription);
+    
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.textContent = 'DueDate';
+    const todoDueDate = document.createElement('input');
+    todoDueDate.type = "date";
+    dueDateLabel.setAttribute('for',todoDueDate);
+    
+    const addTodoButton = document.createElement('button');
+    addTodoButton.type = "submit";
+    addTodoButton.textContent = "ADD";
+
+    const resetTodoButton = document.createElement('button');
+    resetTodoButton.type = "reset";
+    resetTodoButton.textContent = "RESET";
+
+    todoAddItemForm.append(titleLabel,todoTitle,descriptionLabel,todoDescription,dueDateLabel,todoDueDate,addTodoButton,resetTodoButton)
+
+    todoAddItemFormContainer.appendChild(todoAddItemForm);
+
+   todoItemContainer.appendChild(todoAddItemFormContainer);
+
+
+    
+};
+
+
+
 export default CreateTodoContainer;
-export {renderTodoCategory,renderTodoContainer};
+export {renderTodoCategory,renderTodoContainer,renderTodoAddItemForm};

@@ -52,5 +52,5 @@ addTodoCategory(
   //////-----------------------////////////
 
   renderTodoCategory();
-  renderTodoContainer('shopping');
+  
   //renderTodoContainer('House chores');

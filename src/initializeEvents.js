@@ -1,45 +1,47 @@
+import { todoCategories } from "./createTodo"
+import { renderCategory,renderTodoList } from "./renderDom"
+import { createCategory } from "./createTodo"
 
-import { createCategory } from "./createTodo";
-import { renderTodoCategory,renderTodoContainer,renderTodoAddItemForm } from "./renderDom";
 
-function submitTodoCategory(category) {
-    createCategory(category);
-}
-
-const initializeEventListeners = (submitButton) => {
-   
-    submitButton.addEventListener('click',(e)=> {
-        
+export const addCategoryButtonEventListener = () => {
+    const addCategoryForm = document.querySelector('.add-category')
+    const addCategoryInput = document.querySelector('.add-category-input')
+    addCategoryForm.addEventListener('submit',(e) =>{
         e.preventDefault();
-        const input = document.querySelector('.category-input');
-        const category = input.value;
-        console.log(category);
-        submitTodoCategory(category);
-        renderTodoCategory();
-    })
-
-
-}
-
-const intialzeCategoryClicked = (categoryList) => {
-    categoryList.addEventListener('click',(e) => {
-        const categoryItem = e.target.closest('.category-list-item').textContent;
-        console.log(categoryItem);
-        renderTodoContainer(categoryItem);
+       const categoryName = addCategoryInput.value;
+       if(categoryName != '') 
+       {
+        
+           console.log(categoryName);
+           createCategory(categoryName);
+           renderCategory();
+           console.log(todoCategories);
+           addCategoryInput.value = '';
+       }
+       else {
+        console.log("Field can't be empty");
+       }
     })
 }
 
-const addButtonTodoItem = (addButton,categoryName) => {
-    
-    addButton.addEventListener('click',() => {
-        renderTodoAddItemForm(categoryName);
+export const eventToRenderList = () => {
+    const projectCategory = document.querySelector('.project-category');
+    projectCategory.addEventListener('click',(e) => {
+
+        const clickedLi =  e.target.closest('span');
+      if(clickedLi) {  
+        const categoryName = clickedLi.textContent
+        console.log(clickedLi.textContent);
+         renderTodoList(categoryName);
+    }
     })
-    
 }
 
-export default initializeEventListeners;
-export { intialzeCategoryClicked,addButtonTodoItem }
-
-
-
+export const addDeleteCategoryButtonEventListener = (button,index) => {
+    button.addEventListener('click', () => {
+        todoCategories.splice(index,1)
+        renderCategory();
+        console.log(todoCategories);
+    });
+};
 
